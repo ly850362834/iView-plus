@@ -1,9 +1,10 @@
 {
-    "name": "view-design",
-    "version": "4.3.2",
-    "title": "ViewUI",
+    "name": "iview-plus-ui",
+    "version": "1.0.0",
+    "title": "iView-plus-UI",
     "description": "A high quality UI components Library with Vue.js",
-    "homepage": "http://www.iviewui.com",
+    "homepage": "https://github.com/ly850362834/iView-plus.git",
+    "private": false,
     "keywords": [
         "iview",
         "vue",
@@ -37,9 +38,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/view-design/ViewUI"
+        "url": "https://github.com/ly850362834/iView-plus.git"
     },
-    "author": "Aresn",
+    "author": "ly",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/view-design/ViewUI/issues"
