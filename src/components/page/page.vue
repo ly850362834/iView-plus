@@ -179,16 +179,10 @@
         },
         computed: {
             listSizeNumber(){
-                // let show=true;
-                // switch (this.listSize) {
-                //     case 'large':
-                //         this
-                // }
-                // currentPage > listSize=='large'?5:3
                 if (this.listSize=='large') {
-                    return 5
+                    return 5;
                 } else {
-                    return 3
+                    return 3;
                 }
             },
             isSmall () {
