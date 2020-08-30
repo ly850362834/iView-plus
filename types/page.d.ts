@@ -5,6 +5,11 @@
 import Vue, { VNode } from 'vue';
 
 export declare class Page extends Vue {
+   /**
+   * 当前页码List数量
+   * @default large
+   */
+   listSize?: string;
   /**
    * 当前页码，支持 .sync 修饰符
    * @default 1
