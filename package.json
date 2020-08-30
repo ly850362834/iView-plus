@@ -1,6 +1,6 @@
 {
     "name": "iview-plus-ui",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "title": "iView-plus-UI",
     "description": "A high quality UI components Library with Vue.js",
     "homepage": "https://github.com/ly850362834/iView-plus.git",
@@ -34,8 +34,7 @@
         "tslint": "tslint --type-check --fix --project .",
         "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
         "test": "npm run lint && npm run tslint && npm run unit",
-        "prepare": "npm run dist",
-        "preinstall": "npx npm-force-resolutions"
+        "prepare": "npm run dist"
     },
     "resolutions": {
         "graceful-fs": "4.2.3"
