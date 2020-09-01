@@ -6,6 +6,7 @@
             :render-format="render3"
             :operations="['To left','To right']"
             filterable
+            :splitPage="0"
             @on-change="handleChange3">
         <div :style="{float: 'right', margin: '5px'}">
             <Button type="ghost" size="small" @click="reloadMockData">Refresh</Button>

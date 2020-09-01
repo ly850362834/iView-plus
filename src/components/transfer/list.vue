@@ -23,7 +23,7 @@
                     <span v-html="showLabel(item)"></span>
                 </li>
                 <li :class="prefixCls + '-content-not-found'">{{ notFoundText }}</li>
-                <li class="ivu-transfer-split-page">
+                <li class="ivu-transfer-split-page" v-if="this.splitPage">
                     <div><span class="right" @click="lastPage(0)">首页</span><span @click="lastPage(1)">上一页</span></div>
                     <div><input v-model="searchPage"/></div>
                     <div><span @click="nextPage(1)" class="right">下一页</span><span @click="nextPage(0)">尾页</span></div>
@@ -43,7 +43,7 @@
         props: {
             splitPage: {
                 type: Number,
-                default: 5
+                default: 0
             },
             prefixCls: String,
             data: Array,

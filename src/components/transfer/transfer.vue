@@ -35,6 +35,7 @@
                 h(List, {
                     ref: 'left',
                     props: {
+                        splitPage: this.splitPage,
                         prefixCls: this.prefixCls + '-list',
                         data: this.leftData,
                         renderFormat: this.renderFormat,
@@ -65,6 +66,7 @@
                 h(List, {
                     ref: 'right',
                     props: {
+                        splitPage: this.splitPage,
                         prefixCls: this.prefixCls + '-list',
                         data: this.rightData,
                         renderFormat: this.renderFormat,
@@ -107,6 +109,10 @@
                 default () {
                     return [];
                 }
+            },
+            splitPage:{
+                type: Number,
+                default: 0
             },
             listStyle: {
                 type: Object,
