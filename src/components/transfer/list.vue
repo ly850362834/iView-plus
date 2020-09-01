@@ -14,7 +14,7 @@
                     @on-query-change="handleQueryChange"
                     :placeholder="filterPlaceholder"></Search>
             </div>
-            <ul :class="prefixCls + '-content'">
+            <ul :class="prefixCls + '-content'" style="position: relative">
                 <li
                     v-for="item in filterData"
                     :class="itemClasses(item)"
@@ -43,7 +43,7 @@
         props: {
             splitPage: {
                 type: Number,
-                default: 10
+                default: 5
             },
             prefixCls: String,
             data: Array,
@@ -89,7 +89,13 @@
             },
             listStyleFilter(){
                 if (this.splitPage) {
-                    let obj={height:`${this.splitPage*50}px`,width:`${this.listStyle.width}px`};
+                    let height;
+                    if (this.filterable) {
+                        height=105+(this.splitPage+1)*32.4;
+                    } else {
+                        height=75+(this.splitPage+1)*32.4;
+                    }
+                    let obj={height:`${height}px`,width:`${this.listStyle.width}px`};
                     return obj;
                 } else {
                     return this.listStyle;
@@ -143,13 +149,13 @@
                 }
             },
             nextPage(val){
-                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/5);
+                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/5)-1;
                 if (val) {
                     if (this.page<itemLength) {
                         this.page++;
                     }
                 } else {
-                    this.page==itemLength;
+                    this.page=itemLength;
                 }
             },
             itemClasses (item) {
@@ -198,17 +204,28 @@
 </script>
 <style scoped lang="less">
 .ivu-transfer-split-page{
+    @color:#dcdee2;
+    @hoverColor:#2D8cF0;
+    position: absolute;
+    bottom: 0;
     padding-left: 2px;
     padding-right: 2px;
     font-size: 12px;
     display: flex;
+    color:@color;
     justify-content: space-between;
     input{
-        width: 30px;border:none;text-align: center;outline:none;
+        width: 30px;border:none;text-align: center;outline:none;color:black;
     }
     span{
         border-radius:2px;
-        border: 1px black solid;
+        border: 1px @color solid;
+        cursor: pointer;
+    }
+    span:hover{
+        color:@hoverColor;
+        border-radius:2px;
+        border: 1px @hoverColor solid;
         cursor: pointer;
     }
     .right{
