@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes" :style="listStyle">
+    <div :class="classes" :style="listStyleFilter">
         <div :class="prefixCls + '-header'">
             <Checkbox :value="checkedAll" :disabled="checkedAllDisabled" @on-change="toggleSelectAll"></Checkbox>
             <span :class="prefixCls + '-header-title'" @click="toggleSelectAll(!checkedAll)">{{ title }}</span>
@@ -23,7 +23,11 @@
                     <span v-html="showLabel(item)"></span>
                 </li>
                 <li :class="prefixCls + '-content-not-found'">{{ notFoundText }}</li>
-                <li @click="nextPage">下一页</li>
+                <li class="ivu-transfer-split-page">
+                    <div><span class="right" @click="lastPage(0)">首页</span><span @click="lastPage(1)">上一页</span></div>
+                    <div><input v-model="searchPage"/></div>
+                    <div><span @click="nextPage(1)" class="right">下一页</span><span @click="nextPage(0)">尾页</span></div>
+                </li>
             </ul>
         </div>
         <div :class="prefixCls + '-footer'" v-if="showFooter"><slot></slot></div>
@@ -37,6 +41,10 @@
         name: 'TransferList',
         components: { Search, Checkbox },
         props: {
+            splitPage: {
+                type: Number,
+                default: 10
+            },
             prefixCls: String,
             data: Array,
             renderFormat: Function,
@@ -63,6 +71,30 @@
             }
         },
         computed: {
+            searchPage:{
+                get(){
+                    return this.page;
+                },
+                set(val){
+                    const page=val;
+                    const reg=/^\+?[1-9][0-9]*$/;//正整数
+                    const flag=reg.test(page);
+                    if (flag||page==0) {
+                        this.page=page;
+                    } else {
+                        this.page=1;
+                    }
+                    this.$forceUpdate();
+                }
+            },
+            listStyleFilter(){
+                if (this.splitPage) {
+                    let obj={height:`${this.splitPage*50}px`,width:`${this.listStyle.width}px`};
+                    return obj;
+                } else {
+                    return this.listStyle;
+                }
+            },
             classes () {
                 return [
                     `${this.prefixCls}`,
@@ -91,21 +123,33 @@
                 return this.filterData.filter(data => !data.disabled).length <= 0;
             },
             filterData () {
-                let startIndex=(this.page-1)*5;
-                let endIndex=(this.page)*5;
-                return this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
+                if (this.splitPage) {
+                    let startIndex=(this.page-1)*this.splitPage;
+                    let endIndex=(this.page)*this.splitPage;
+                    return this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
+                } else {
+                    return this.showItems.filter(item => this.filterMethod(item, this.query));
+                }
             }
         },
         methods: {
-            lastPage(){
-                if (this.page>0) {
-                    this.page--;
+            lastPage(val){
+                if (val) {
+                    if (this.page>1) {
+                        this.page--;
+                    }
+                } else {
+                    this.page=1;
                 }
             },
-            nextPage(){
-                const itemLength=this.showItems.filter(item => this.filterMethod(item, this.query)).length;
-                if (this.page<Math.ceil(itemLength/5)) {
-                    this.page++;
+            nextPage(val){
+                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/5);
+                if (val) {
+                    if (this.page<itemLength) {
+                        this.page++;
+                    }
+                } else {
+                    this.page==itemLength;
                 }
             },
             itemClasses (item) {
@@ -152,3 +196,23 @@
         }
     };
 </script>
+<style scoped lang="less">
+.ivu-transfer-split-page{
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    input{
+        width: 30px;border:none;text-align: center;outline:none;
+    }
+    span{
+        border-radius:2px;
+        border: 1px black solid;
+        cursor: pointer;
+    }
+    .right{
+        margin-right: 5px;
+    }
+}
+</style>
