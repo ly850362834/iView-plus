@@ -23,6 +23,7 @@
                     <span v-html="showLabel(item)"></span>
                 </li>
                 <li :class="prefixCls + '-content-not-found'">{{ notFoundText }}</li>
+                <li @click="nextPage">下一页</li>
             </ul>
         </div>
         <div :class="prefixCls + '-footer'" v-if="showFooter"><slot></slot></div>
@@ -52,7 +53,8 @@
             return {
                 showItems: [],
                 query: '',
-                showFooter: true
+                showFooter: true,
+                page:1
             };
         },
         watch: {
@@ -89,10 +91,23 @@
                 return this.filterData.filter(data => !data.disabled).length <= 0;
             },
             filterData () {
-                return this.showItems.filter(item => this.filterMethod(item, this.query));
+                let startIndex=(this.page-1)*5;
+                let endIndex=(this.page)*5;
+                return this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
             }
         },
         methods: {
+            lastPage(){
+                if (this.page>0) {
+                    this.page--;
+                }
+            },
+            nextPage(){
+                const itemLength=this.showItems.filter(item => this.filterMethod(item, this.query)).length;
+                if (this.page<Math.ceil(itemLength/5)) {
+                    this.page++;
+                }
+            },
             itemClasses (item) {
                 return [
                     `${this.prefixCls}-content-item`,
