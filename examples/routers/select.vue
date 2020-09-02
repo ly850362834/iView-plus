@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 100px;">
-        <Select v-model="model1" filterable style="width:200px" prefix="ios-albums">
+        <Select v-model="model1" filterable style="width:200px" prefix="ios-albums" @on-change="onChange">
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
 
@@ -136,9 +136,12 @@
                 model34: [],
                 model35: [],
                 model36: []
-            }
+            };
         },
         methods: {
+            onChange(val,item){
+                console.log(val,item);
+            },
             more (num) {
                 return 'more' + num;
             },

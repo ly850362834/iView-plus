@@ -788,7 +788,7 @@
                 const shouldEmitInput = newValue !== oldValue && vModelValue !== this.value;
                 if (shouldEmitInput) {
                     this.$emit('input', vModelValue); // to update v-model
-                    this.$emit('on-change', this.publicValue);
+                    this.$emit('on-change', this.publicValue,this.values);
                     this.dispatch('FormItem', 'on-form-change', this.publicValue);
                 }
             },
