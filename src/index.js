@@ -53,7 +53,7 @@ import Time from './components/time';
 import Timeline from './components/timeline';
 import TimePicker from './components/time-picker';
 import Tooltip from './components/tooltip';
-import Transfer from './components/transfer';
+import TransferPlus from './components/transfer';
 import Tree from './components/tree';
 import Upload from './components/upload';
 import {Row, Col} from './components/grid';
@@ -137,7 +137,7 @@ const components = {
     TimelineItem: Timeline.Item,
     TimePicker,
     Tooltip,
-    Transfer,
+    TransferPlus,
     Tree,
     Upload
 };
@@ -172,7 +172,7 @@ const install = function(Vue, opts = {}) {
 
     Vue.prototype.$IVIEW = {
         size: opts.size || '',
-        transfer: 'transfer' in opts ? opts.transfer : '',
+        transferPlus: 'transferPlus' in opts ? opts.transferPlus : '',
         capture: 'capture' in opts ? opts.capture : true,
         select: {
             arrow: opts.select ? opts.select.arrow ? opts.select.arrow : '' : '',

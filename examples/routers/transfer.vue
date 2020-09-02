@@ -1,17 +1,17 @@
 <template>
-    <Transfer
+    <TransferPlus
             :data="data3"
             :target-keys="targetKeys3"
             :list-style="listStyle"
             :render-format="render3"
             :operations="['To left','To right']"
             filterable
-            :splitPage="0"
+            :splitPage="10"
             @on-change="handleChange3">
         <div :style="{float: 'right', margin: '5px'}">
             <Button type="ghost" size="small" @click="reloadMockData">Refresh</Button>
         </div>
-    </Transfer>
+    </TransferPlus>
 </template>
 <script>
     export default {
@@ -23,12 +23,12 @@
                     width: '250px',
                     height: '300px'
                 }
-            }
+            };
         },
         methods: {
             getMockData () {
                 let mockData = [];
-                for (let i = 1; i <= 20; i++) {
+                for (let i = 1; i <= 2000; i++) {
                     mockData.push({
                         key: i.toString(),
                         label: 'Content ' + i,

@@ -10,7 +10,6 @@
         name: 'Transfer',
         mixins: [ Emitter, Locale ],
         render (h) {
-
             function cloneVNode (vnode) {
                 const clonedChildren = vnode.children && vnode.children.map(vnode => cloneVNode(vnode));
                 const cloned = h(vnode.tag, vnode.data, clonedChildren);
@@ -22,10 +21,8 @@
                 cloned.ns = vnode.ns;
                 cloned.isStatic = vnode.isStatic;
                 cloned.key = vnode.key;
-
                 return cloned;
             }
-
             const vNodes = this.$slots.default === undefined ? [] : this.$slots.default;
             const clonedVNodes = this.$slots.default === undefined ? [] : vNodes.map(vnode => cloneVNode(vnode));
 
@@ -234,10 +231,9 @@
                 const targetKeys = this.targetKeys;
                 const opposite = direction === 'left' ? 'right' : 'left';
                 const moveKeys = this.getValidKeys(opposite);
-                const newTargetKeys = direction === 'right' ?
+                let newTargetKeys = direction === 'right' ?
                         moveKeys.concat(targetKeys) :
                         targetKeys.filter(targetKey => !moveKeys.some(checkedKey => targetKey === checkedKey));
-
                 this.$refs[opposite].toggleSelectAll(false);
                 this.$emit('on-change', newTargetKeys, direction, moveKeys);
                 this.dispatch('FormItem', 'on-form-change', {

@@ -132,7 +132,8 @@
                 if (this.splitPage) {
                     let startIndex=(this.page-1)*this.splitPage;
                     let endIndex=(this.page)*this.splitPage;
-                    return this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
+                    let sortArr=this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
+                    return sortArr;
                 } else {
                     return this.showItems.filter(item => this.filterMethod(item, this.query));
                 }
@@ -140,6 +141,7 @@
         },
         methods: {
             lastPage(val){
+                //val==0 代表首页  0会转为false
                 if (val) {
                     if (this.page>1) {
                         this.page--;
@@ -149,7 +151,7 @@
                 }
             },
             nextPage(val){
-                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/5)-1;
+                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/this.splitPage)-1;
                 if (val) {
                     if (this.page<itemLength) {
                         this.page++;
@@ -211,6 +213,7 @@
     padding-left: 2px;
     padding-right: 2px;
     font-size: 12px;
+    width: 100%;
     display: flex;
     color:@color;
     justify-content: space-between;
@@ -224,9 +227,7 @@
     }
     span:hover{
         color:@hoverColor;
-        border-radius:2px;
         border: 1px @hoverColor solid;
-        cursor: pointer;
     }
     .right{
         margin-right: 5px;
