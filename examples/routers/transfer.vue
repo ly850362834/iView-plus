@@ -6,7 +6,9 @@
             :render-format="render3"
             :operations="['To left','To right']"
             filterable
+            :leftPage="leftPage"
             :splitPage="10"
+            @leftNextPage="leftNextPage"
             @on-change="handleChange3">
         <div :style="{float: 'right', margin: '5px'}">
             <Button type="ghost" size="small" @click="reloadMockData">Refresh</Button>
@@ -22,13 +24,17 @@
                 listStyle: {
                     width: '250px',
                     height: '300px'
-                }
+                },
+                leftPage:1
             };
         },
         methods: {
+            leftNextPage(){
+                console.log(this.leftPage++);
+            },
             getMockData () {
                 let mockData = [];
-                for (let i = 1; i <= 2000; i++) {
+                for (let i = 1; i <= 10; i++) {
                     mockData.push({
                         key: i.toString(),
                         label: 'Content ' + i,

@@ -41,12 +41,15 @@
                         listStyle: this.listStyle,
                         title: this.localeTitles[0],
                         filterable: this.filterable,
+                        page:this.leftPage,
                         filterPlaceholder: this.localeFilterPlaceholder,
                         filterMethod: this.filterMethod,
                         notFoundText: this.localeNotFoundText
                     },
                     on: {
-                        'on-checked-keys-change': this.handleLeftCheckedKeysChange
+                        'on-checked-keys-change': this.handleLeftCheckedKeysChange,
+                        'nextPage':this.leftNextPage,
+                        'lastPage':this.leftLastPage
                     }
                 }, vNodes),
 
@@ -77,7 +80,9 @@
                         notFoundText: this.localeNotFoundText
                     },
                     on: {
-                        'on-checked-keys-change': this.handleRightCheckedKeysChange
+                        'on-checked-keys-change': this.handleRightCheckedKeysChange,
+                        'nextPage':this.rightNextPage,
+                        'lastPage':this.rightLastPage
                     }
                 }, clonedVNodes)
             ]);
@@ -93,6 +98,18 @@
                 type: Function,
                 default (item) {
                     return item.label || item.key;
+                }
+            },
+            leftPage:{
+                type: Number,
+                default(item){
+                    return 1;
+                }
+            },
+            rightPage:{
+                type: Number,
+                default(item){
+                    return 1;
                 }
             },
             targetKeys: {
@@ -194,6 +211,18 @@
             }
         },
         methods: {
+            leftNextPage(){
+                this.$emit('leftNextPage');
+            },
+            leftLastPage(){
+                this.$emit('leftLastPage');
+            },
+            rightNextPage(){
+                this.$emit('rightNextPage');
+            },
+            rightLastPage(){
+                this.$emit('rightLastPage');
+            },
             getValidKeys (direction) {
                 return this[`${direction}Data`].filter(data => !data.disabled && this[`${direction}CheckedKeys`].indexOf(data.key) > -1).map(data => data.key);
             },

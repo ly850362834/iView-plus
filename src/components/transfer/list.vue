@@ -41,9 +41,15 @@
         name: 'TransferList',
         components: { Search, Checkbox },
         props: {
+            //分页数量
             splitPage: {
                 type: Number,
                 default: 0
+            },
+            //总页数
+            page:{
+                type:Number,
+                default: 1
             },
             prefixCls: String,
             data: Array,
@@ -61,8 +67,7 @@
             return {
                 showItems: [],
                 query: '',
-                showFooter: true,
-                page:1
+                showFooter: true
             };
         },
         watch: {
@@ -129,36 +134,38 @@
                 return this.filterData.filter(data => !data.disabled).length <= 0;
             },
             filterData () {
-                if (this.splitPage) {
-                    let startIndex=(this.page-1)*this.splitPage;
-                    let endIndex=(this.page)*this.splitPage;
-                    let sortArr=this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
-                    return sortArr;
-                } else {
-                    return this.showItems.filter(item => this.filterMethod(item, this.query));
-                }
+                // if (this.splitPage) {
+                //     // let startIndex=(this.page-1)*this.splitPage;
+                //     // let endIndex=(this.page)*this.splitPage;
+                //     let sortArr=this.showItems.filter(item => this.filterMethod(item, this.query)).slice(startIndex,endIndex);
+                //     return sortArr;
+                // } else {
+                return this.showItems.filter(item => this.filterMethod(item, this.query));
+                // }
             }
         },
         methods: {
             lastPage(val){
+                this.$emit('lastPage',val);
                 //val==0 代表首页  0会转为false
-                if (val) {
-                    if (this.page>1) {
-                        this.page--;
-                    }
-                } else {
-                    this.page=1;
-                }
+                // if (val) {
+                //     if (this.page>1) {
+                //         this.page--;
+                //     }
+                // } else {
+                //     this.page=1;
+                // }
             },
             nextPage(val){
-                const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/this.splitPage)-1;
-                if (val) {
-                    if (this.page<itemLength) {
-                        this.page++;
-                    }
-                } else {
-                    this.page=itemLength;
-                }
+                this.$emit('nextPage',val);
+                // const itemLength=Math.ceil(this.showItems.filter(item => this.filterMethod(item, this.query)).length/this.splitPage)-1;
+                // if (val) {
+                //     if (this.page<itemLength) {
+                //         this.page++;
+                //     }
+                // } else {
+                //     this.page=itemLength;
+                // }
             },
             itemClasses (item) {
                 return [
