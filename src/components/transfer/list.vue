@@ -25,7 +25,7 @@
                 <li :class="prefixCls + '-content-not-found'">{{ notFoundText }}</li>
                 <li class="ivu-transfer-split-page" v-if="this.splitPage">
                     <div><span class="right" @click="lastPage(0)">首页</span><span @click="lastPage(1)">上一页</span></div>
-                    <div><input v-model="searchPage"/></div>
+                    <div><input v-model="page"/></div>
                     <div><span @click="nextPage(1)" class="right">下一页</span><span @click="nextPage(0)">尾页</span></div>
                 </li>
             </ul>
@@ -76,22 +76,22 @@
             }
         },
         computed: {
-            searchPage:{
-                get(){
-                    return this.page;
-                },
-                set(val){
-                    const page=val;
-                    const reg=/^\+?[1-9][0-9]*$/;//正整数
-                    const flag=reg.test(page);
-                    if (flag||page==0) {
-                        this.page=page;
-                    } else {
-                        this.page=1;
-                    }
-                    this.$forceUpdate();
-                }
-            },
+            // searchPage:{
+            //     get(){
+            //         return this.page;
+            //     },
+            //     set(val){
+            //         const page=val;
+            //         const reg=/^\+?[1-9][0-9]*$/;//正整数
+            //         const flag=reg.test(page);
+            //         if (flag||page==0) {
+            //             this.page=page;
+            //         } else {
+            //             this.page=1;
+            //         }
+            //         this.$forceUpdate();
+            //     }
+            // },
             listStyleFilter(){
                 if (this.splitPage) {
                     let height;
