@@ -31,6 +31,8 @@ export declare class Transfer extends Vue {
    */
   'list-style'?: object;
   'splitPage'?: number;
+  'leftPage'?: number;
+  'rightPage'?: number;
   /**
    * 标题集合，顺序从左至右	Array	
    * @default ['源列表', '目的列表']

@@ -14,6 +14,8 @@ export declare class Button extends Vue {
    * 幽灵属性，使按钮背景透明
    * @default false
    */
+  //节流
+  throttle?: object;
   ghost?: boolean;
   /**
    * 按钮大小，可选值为large、small、default或者不设置
