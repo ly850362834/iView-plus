@@ -7,7 +7,7 @@
             :operations="['To left','To right']"
             filterable
             :leftPage="leftPage"
-            :splitPage="10"
+            :splitPage="0"
             @leftNextPage="leftNextPage"
             @on-change="handleChange3">
         <div :style="{float: 'right', margin: '5px'}">
@@ -30,7 +30,6 @@
         },
         methods: {
             leftNextPage(){
-                console.log(this.leftPage++);
             },
             getMockData () {
                 let mockData = [];

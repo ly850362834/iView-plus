@@ -1,7 +1,7 @@
 <template>
     <div>
         <Divider>vue-router 3.1 bug</Divider>
-        <Button to="/button">跳转到 Button（当前路径）</Button>
+        <Button @throttleClickAfter="throttleClickAfter()">跳转到 Button（当前路径）</Button>
         <Button to="/button" replace>跳转到 Button（当前路径, replace）</Button>
         <Divider></Divider>
         <Button icon="logo-github" size="small" shape="circle"></Button>
@@ -319,9 +319,12 @@
         data () {
             return {
                 buttonSize: 'large'
-            }
+            };
         },
         methods: {
+            throttleClickAfter(){
+                // console.log(999)
+            },
             hc (data) {
                 console.log(data);
             }

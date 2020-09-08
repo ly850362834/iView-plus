@@ -17,7 +17,27 @@
         name: 'Button',
         mixins: [ mixinsLink, mixinsForm ],
         components: { Icon },
+        data:function(){
+            return {
+                prevTime:'',
+            };
+        },
         props: {
+            //防抖
+            // debounce: {
+            //     type: Number,
+            //     default: ''
+            // },
+            //节流
+            throttle:{
+                type: Object,
+                default:function () {
+                    return {
+                        tipMessage:'请勿重复点击',
+                        time:0
+                    };
+                }
+            },
             type: {
                 validator (value) {
                     return oneOf(value, ['default', 'primary', 'dashed', 'text', 'info', 'success', 'warning', 'error']);
@@ -101,9 +121,21 @@
             }
         },
         methods: {
+            throttleClick(delay){
+                var now = Date.now();
+                if (now-this.prevTime>=delay) {
+                    this.handleClick();
+                    this.prevTime = Date.now();
+                    return;
+                }
+                this.$emit('throttleClickAfter', event);
+            },
+            handleClick(){
+                this.$emit('click', event);
+            },
             // Ctrl or CMD and click, open in new window when use `to`
             handleClickLink (event) {
-                this.$emit('click', event);
+                this.throttleClick(this.throttle.time);
                 const openInNewWindow = event.ctrlKey || event.metaKey;
 
                 this.handleCheckClick(event, openInNewWindow);
